@@ -2,17 +2,14 @@
 
 <PageTitle>Notes</PageTitle>
 
-<div class="page">
-    <div class="sidebar">
+<div class="page block sm:flex h-full text-white">
+    <div class="w-full sm:h-full sm:w-96 bg-zinc-800 p-4">
+        <h1 class="text-3xl font-semibold mb-2">mdNotes</h1>
         <NavMenu />
     </div>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-        </div>
-
-        <article class="content px-4">
+    <main class="w-full h-full bg-zinc-900 p-4">
+        <article class="px-4">
             @Body
         </article>
     </main>

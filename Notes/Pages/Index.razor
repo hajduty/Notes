@@ -1,9 +1,20 @@
-﻿@page "/"
+﻿@using Notes.Data
+@inject MoodyService moodyService
 
-<PageTitle>Index</PageTitle>
+@page "/"
+<PageTitle>mdNotes</PageTitle>
 
-<h1>Hello, world!</h1>
+<h1>mdNotes</h1>
 
-Welcome to your new app.
-
-<SurveyPrompt Title="How is Blazor working for you?" />
+@code {
+  protected override void OnInitialized()
+  {
+      moodyService.Md = new Moody{
+        ActiveNoteId = 0,
+        ActiveNote = new MoodyData{
+          Id = 0,
+          Text = "# hello world"
+        }
+      };
+  }
+}
