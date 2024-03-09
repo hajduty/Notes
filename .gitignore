@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # VSCode
 .vscode
+
+/Notes/Styles/app.output.css
+/Notes/wwwroot/app.css

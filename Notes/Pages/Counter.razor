@@ -1,5 +1,8 @@
 ﻿@page "/counter"
 
+@using Notes.Data
+@inject MdService MdService
+
 <PageTitle>Counter</PageTitle>
 
 <h1>Counter</h1>
@@ -8,8 +11,18 @@
 
 <button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
 
+@((MarkupString)html)
+
+@html
+
 @code {
     private int currentCount = 0;
+
+    private string Test = "<p class=\"text-amber-800\">Hej</p>";
+
+    private static string markdow = "# Markdown Example\n This is a **bold** text. List: - Item 3 _italic_ text";
+
+    private string html = MdService.ConvertToHtml(markdow);
 
     private void IncrementCount()
     {
