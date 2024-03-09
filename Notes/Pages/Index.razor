@@ -4,7 +4,21 @@
 @page "/"
 <PageTitle>mdNotes</PageTitle>
 
-<h1>mdNotes</h1>
+<div class="w-full h-full">
+  <div class="flex flex-col w-full h-full">
+    <div class="flex items-center bg-zinc-950">
+      <div class="pl-2">
+        <span>Use Markdown!</span>
+      </div>
+      <div class="ml-auto">
+        <button type="button" class="p-2 py-3">🪟</button>
+      </div>
+    </div>
+    <div class="w-full p-1.5 grow">
+      <textarea class="w-full h-full resize-none bg-transparent"></textarea>
+    </div>
+  </div>
+</div>
 
 @code {
   protected override void OnInitialized()
