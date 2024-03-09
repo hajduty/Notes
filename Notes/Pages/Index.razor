@@ -16,7 +16,7 @@
         </div>
         <div class="w-full grow flex">
             <textarea class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")" @oninput="HandleChangeTextarea">@moodyService.Md.ActiveNote.Text</textarea>
-            <div class="p-4 bg-zinc-950 @(isPreview ? "w-1/2" : "hidden")"><HtmlPreview MD="@moodyService.Md.ActiveNote.Text"></HtmlPreview></div>
+            <div class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out @(isPreview ? "w-1/2" : "hidden")"><HtmlPreview MD="@moodyService.Md.ActiveNote.Text"></HtmlPreview></div>
         </div>
     </div>
 </div>
