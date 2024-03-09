@@ -1,26 +1,26 @@
 ﻿@using Notes.Data
 @inject MoodyService MoodyService
 
-<div class="container-fluid">
-  <ul>
+<ul>
     @for (int index = 0; index < list.Count(); index++)
     {
-      int i = index;
-      string str = list[i];
-      bool isLast = i == list.Count() - 1;
-      bool isActive = i == MoodyService.Md?.ActiveNoteId;
+        int i = index;
+        string str = list[i];
+        bool isLast = i == list.Count() - 1;
+        bool isActive = i == MoodyService.Md?.ActiveNoteId;
 
-      <li class="@(isLast ? "" : "mb-2")">
-        <button class="p-4" @onclick="@(() => HandleChangeActiveNoteId(i))">@isActive @isLast @list[i]</button>
-      </li>
+        <li class="@(isLast ? "" : "mb-2")">
+            <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")"
+                @onclick="@(() => HandleChangeActiveNoteId(i))">@list[i]</button>
+        </li>
     }
-  </ul>
-</div>
+</ul>
 
 @code {
-  public List<string> list = new List<string> { "my first note", "my second note" };
+    public List<string> list = new List<string> { "my first note", "my second note" };
 
-    private void HandleChangeActiveNoteId (int index) {
-      MoodyService.Md.ActiveNoteId = index;
+    private void HandleChangeActiveNoteId(int index)
+    {
+        MoodyService.Md.ActiveNoteId = index;
     }
 }
