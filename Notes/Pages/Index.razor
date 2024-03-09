@@ -5,30 +5,44 @@
 <PageTitle>mdNotes</PageTitle>
 
 <div class="w-full h-full">
-  <div class="flex flex-col w-full h-full">
-    <div class="flex items-center bg-zinc-950">
-      <div class="pl-2">
-        <span>Use Markdown!</span>
-      </div>
-      <div class="ml-auto">
-        <button type="button" class="p-2 py-3">🪟</button>
-      </div>
+    <div class="flex flex-col w-full h-full">
+        <div class="flex items-center bg-zinc-950">
+            <div class="pl-2">
+                <span>Use Markdown!</span>
+            </div>
+            <div class="ml-auto">
+                <button type="button" class="p-2 py-3" @onclick="@(() => isPreview = !isPreview)">🪟</button>
+            </div>
+        </div>
+        <div class="w-full grow flex">
+            <textarea class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")" @oninput="HandleChangeTextarea">@moodyService.Md.ActiveNote.Text</textarea>
+            <div class="p-4 bg-zinc-950 @(isPreview ? "w-1/2" : "hidden")"><HtmlPreview MD="@moodyService.Md.ActiveNote.Text"></HtmlPreview></div>
+        </div>
     </div>
-    <div class="w-full p-1.5 grow">
-      <textarea class="w-full h-full resize-none bg-transparent"></textarea>
-    </div>
-  </div>
 </div>
 
 @code {
-  protected override void OnInitialized()
-  {
-      moodyService.Md = new Moody{
-        ActiveNoteId = 0,
-        ActiveNote = new MoodyData{
-          Id = 0,
-          Text = "# hello world"
+    private bool isPreview = false;
+
+    private void HandleChangeTextarea(ChangeEventArgs e)
+    {
+        if (e.Value is not null)
+        {
+            string value = e.Value.ToString();
+            moodyService.Md.ActiveNote.Text = value;
         }
-      };
-  }
+    }
+
+    protected override void OnInitialized()
+    {
+        moodyService.Md = new Moody
+            {
+                ActiveNoteId = 0,
+                ActiveNote = new MoodyData
+                {
+                    Id = 0,
+                    Text = "# hello world"
+                }
+            };
+    }
 }
