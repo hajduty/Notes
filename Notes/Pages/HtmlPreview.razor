@@ -1,5 +1,8 @@
-﻿<div class="bg-zinc-700">
-    @((MarkupString)MD)
+﻿@using Notes.Data
+@inject MdService MdService
+
+<div class="prose prose-invert">
+    @((MarkupString)MdService.ConvertToHtml(MD))
 </div>
 
 @code {
