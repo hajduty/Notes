@@ -1,8 +1,7 @@
-﻿@using Notes.Data
-@inject MdService MdService
+﻿@inject MdService MdService
 
 <div class="prose prose-invert">
-    @((MarkupString)MdService.ConvertToHtml(MD))
+    @((MarkupString)MdService.ConvertToHtml(MD ?? ""))
 </div>
 
 @code {

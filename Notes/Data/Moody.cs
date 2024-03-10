@@ -2,15 +2,15 @@ namespace Notes.Data
 {
     public class Moody
     {
-        public int? ActiveNoteId { get; set; }
+        public int ActiveNoteId { get; set; } = 0;
 
-        public MoodyData? ActiveNote { get; set; }
+        public MoodyData ActiveNote { get; set; } = new();
     }
 
     public class MoodyData
     {
         public int Id { get; set; } = 0;
-        public string Text { get; set; } = "";
-        public string Title { get; set; } = "Example";
+        public string Text { get; set; } = "# hello world";
+        public string Title { get; set; } = "Untitled";
     }
 }

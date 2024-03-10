@@ -5,10 +5,37 @@
 <div class="page block sm:flex h-full text-white">
     <div class="w-full sm:h-full sm:w-96 bg-zinc-800">
         <h1 class="text-3xl font-semibold mb-2 p-4 outline-none">mdNotes</h1>
-        <NavMenu />
+        <NavMenu HandleChangeActiveNote="@HandleChangeActiveNote" HandleCreateNote="@HandleCreateNote" />
     </div>
 
     <main class="w-full h-full bg-zinc-900 overflow-hidden">
-        @Body
+        <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" />
     </main>
 </div>
+
+@code {
+    [Inject]
+    protected MoodyService State { get; set; }
+
+    private void HandleChangeTextarea(ChangeEventArgs e)
+    {
+        if (e is not null && e.Value is not null)
+        {
+            string value = e.Value.ToString() ?? "";
+            State.Md.ActiveNote.Text = value;
+
+            State.UpdateNote(State.Md.ActiveNote);
+        }
+    }
+
+    private void HandleChangeActiveNote(MoodyData moodyData)
+    {
+        State.Md.ActiveNoteId = moodyData.Id;
+        State.Md.ActiveNote = moodyData;
+    }
+
+    private void HandleCreateNote()
+    {
+        State.AddToNotes(new MoodyData() { Id = State.Notes.Count() });
+    }
+}

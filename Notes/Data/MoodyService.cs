@@ -1,16 +1,13 @@
-using System.Reflection;
-using System.Xml.Linq;
-
 namespace Notes.Data
 {
     public class MoodyService
     {
-        public Moody? Md { get; set; }
+        public Moody Md { get; set; } = new();
 
-        private List<MoodyData> Notes { get; set; } = new List<MoodyData>() { new MoodyData() { Text = "Example", Id = 0, Title = "Titelx" } };
+        public List<MoodyData> Notes { get; set; } = new();
 
         public void AddToNotes(MoodyData note)
-        {
+        {  
             Notes.Add(note);
         }
 
@@ -22,16 +19,6 @@ namespace Notes.Data
                 return;
 
             element = md;
-        }
-
-        public List<MoodyData> GetNotes()
-        {
-            return Notes;
-        }
-
-        public void SetNotes(List<MoodyData> notes)
-        {
-            Notes = notes;
         }
     }
 }

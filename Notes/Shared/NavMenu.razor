@@ -1,51 +1,36 @@
-﻿@using Notes.Data
-@inject MoodyService moodyService
-
-<div class="container-fluid">
-    <button @onclick=@NewNote>addNew</button>
+﻿<div class="container-fluid">
+    <button @onclick="@OnHandleCreateNote">addNew</button>
     <ul>
-        @for (int i = 0; i < notes.Count(); i++)
+        @for (int i = 0; i < MoodyService.Notes.Count(); i++)
         {
             int index = i;
-            int id = notes[i].Id;
+            MoodyData Note = MoodyService.Notes[i];
 
-            string str = notes[i].Title;
-            bool isLast = index == notes.Count() - 1;
-            bool isActive = id == moodyService.Md?.ActiveNoteId;
+            bool isLast = index == MoodyService.Notes.Count() - 1;
+            bool isActive = Note.Id == MoodyService.Md.ActiveNoteId;
 
             <li class="@(isLast ? "" : "mb-2")">
-                <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")" @onclick="@(() => HandleChangeActiveNoteId(notes[index]))">@isActive @isLast @notes[index].Title</button>
+                <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")"
+                    @onclick="@(() => OnHandleChangeActiveNote(Note))">@Note.Title</button>
             </li>
         }
     </ul>
 </div>
 
 @code {
-    private List<MoodyData> notes = new List<MoodyData>();
+    [Parameter]
+    public Action<MoodyData>? HandleChangeActiveNote { get; set; }
 
-    protected override void OnInitialized()
+    private void OnHandleChangeActiveNote(MoodyData moodyData)
     {
-        notes = moodyService.GetNotes();
+        HandleChangeActiveNote?.Invoke(moodyData);
     }
 
-    protected async void OnAfterRenderAsync(bool firstRender)
-    {
-        //if (firstRender)
-        //{
-        //    
-    //}
-    }
+    [Parameter]
+    public Action? HandleCreateNote { get; set; }
 
-    private void NewNote()
+    private void OnHandleCreateNote()
     {
-        moodyService.AddToNotes(new MoodyData() {Id = 1 + notes.Count()});
-    }
-
-    private void HandleChangeActiveNoteId(MoodyData moodyData)
-    {
-        moodyService.Md.ActiveNote = moodyData;
-        moodyService.Md.ActiveNoteId = moodyData.Id;
-        Console.WriteLine($"Size={moodyService.GetNotes().Count} Sel={moodyData.Id}");
-        Console.WriteLine($"Title = [ {moodyData.Title} ] Text = [ {moodyData.Text} ]");
+        HandleCreateNote?.Invoke();
     }
 }

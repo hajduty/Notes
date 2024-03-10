@@ -1,7 +1,4 @@
-﻿@using Notes.Data
-@inject MoodyService moodyService
-
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
 @inject ProtectedLocalStorage ProtectedLocalStore
 
 @page "/"
@@ -14,12 +11,18 @@
                 <span>Use Markdown!</span>
             </div>
             <div class="ml-auto">
-                <button type="button" class="p-2 py-3 border-l border-zinc-800 hover:bg-zinc-800 @(isPreview ? "bg-zinc-900" :"")" @onclick="@(() => isPreview = !isPreview)">Preview</button>
+                <button type="button"
+                    class="p-2 py-3 border-l border-zinc-800 hover:bg-zinc-800 @(isPreview ? "bg-zinc-900" :"")"
+                    @onclick="@(() => isPreview = !isPreview)">Preview</button>
             </div>
         </div>
         <div class="w-full grow flex">
-            <textarea class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")" @oninput="HandleChangeTextarea">@moodyService.Md.ActiveNote.Text</textarea>
-            <div class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out @(isPreview ? "w-1/2" : "hidden")"><HtmlPreview MD="@moodyService.Md.ActiveNote.Text"></HtmlPreview></div>
+            <textarea class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
+                @oninput="OnHandleChangeTextarea">@MoodyService.Md.ActiveNote.Text</textarea>
+            <div
+                class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out @(isPreview ? "w-1/2" : "hidden")">
+                <HtmlPreview MD="@MoodyService.Md.ActiveNote.Text"></HtmlPreview>
+            </div>
         </div>
     </div>
 </div>
@@ -27,32 +30,10 @@
 @code {
     private bool isPreview = false;
 
-    private async void HandleChangeTextarea(ChangeEventArgs e)
-    {
-        if (e.Value is not null)
-        {
-            string value = e.Value.ToString();
-            moodyService.Md.ActiveNote.Text = value;
+    [Parameter]
+    public Action<ChangeEventArgs>? HandleChangeTextarea { get; set; }
 
-            moodyService.UpdateNote(moodyService.Md.ActiveNote);
-
-            Console.WriteLine($"{moodyService.Md.ActiveNoteId}");
-        }
-    }
-
-    protected override void OnInitialized()
-    {
-        moodyService.Md = new Moody
-        {
-            ActiveNoteId = 0,
-            ActiveNote = new MoodyData
-            {
-                Id = 0,
-                Text = "# hello world",
-                Title = "example"
-            }
-        };
-
-        //moodyService.Md.ActiveNote = { new MoodyData() { }}
+    private void OnHandleChangeTextarea(ChangeEventArgs e) {
+        HandleChangeTextarea?.Invoke(e);
     }
 }
