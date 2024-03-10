@@ -7,7 +7,7 @@ namespace Notes.Data
         public List<MoodyData> Notes { get; set; } = new();
 
         public void AddToNotes(MoodyData note)
-        {  
+        {
             Notes.Add(note);
         }
 
