@@ -8,7 +8,7 @@
             MoodyData Note = State.Notes[i];
 
             bool isLast = index == State.Notes.Count() - 1;
-            bool isActive = Note.Id == State.Md.ActiveNoteId;
+            bool isActive = Note.Id == State.Md.ActiveNote.Id;
 
             <li class="@(isLast ? "" : "mb-2")">
                 <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")"

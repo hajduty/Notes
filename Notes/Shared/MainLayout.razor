@@ -38,7 +38,6 @@
 
     private void HandleChangeActiveNote(MoodyData moodyData)
     {
-        State.Md.ActiveNoteId = moodyData.Id;
         State.Md.ActiveNote = moodyData;
         StateHasChanged();
     }
