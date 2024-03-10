@@ -4,7 +4,7 @@ namespace Notes.Data
     {
         public int? ActiveNoteId { get; set; }
 
-        public MoodyData? ActiveNote { get; set; }
+        public MoodyData? ActiveNote { get; set; } = new MoodyData();
     }
 
     public class MoodyData

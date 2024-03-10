@@ -7,7 +7,7 @@ namespace Notes.Data
     {
         public Moody? Md { get; set; }
 
-        private List<MoodyData> Notes { get; set; } = new List<MoodyData>() { new MoodyData() { Text = "Example", Id = 0, Title = "Titelx" } };
+        private List<MoodyData> Notes { get; set; } = new List<MoodyData>();
 
         public void AddToNotes(MoodyData note)
         {
@@ -16,12 +16,14 @@ namespace Notes.Data
 
         public void UpdateNote(MoodyData md)
         {
-            var element = Notes.FirstOrDefault(e => e.Id == md.Id);
+            var index = Notes.FindIndex(e => e.Id == md.Id);
 
-            if (element == null)
+            if (index == -1)
                 return;
 
-            element = md;
+            Notes[index] = md;
+
+            Console.WriteLine($"{Notes[index]}");
         }
 
         public List<MoodyData> GetNotes()

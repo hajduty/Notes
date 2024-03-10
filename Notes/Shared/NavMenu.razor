@@ -4,48 +4,49 @@
 <div class="container-fluid">
     <button @onclick=@NewNote>addNew</button>
     <ul>
-        @for (int i = 0; i < notes.Count(); i++)
+        @for (int i = 0; i < moodyService.GetNotes().Count(); i++)
         {
             int index = i;
-            int id = notes[i].Id;
+            int id = moodyService.GetNotes()[i].Id;
 
-            string str = notes[i].Title;
-            bool isLast = index == notes.Count() - 1;
+            string str = moodyService.GetNotes()[i].Title;
+            bool isLast = index == moodyService.GetNotes().Count - 1;
             bool isActive = id == moodyService.Md?.ActiveNoteId;
 
             <li class="@(isLast ? "" : "mb-2")">
-                <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")" @onclick="@(() => HandleChangeActiveNoteId(notes[index]))">@isActive @isLast @notes[index].Title</button>
+                <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")" @onclick="@(() => HandleChangeActiveNoteId(moodyService.GetNotes()[index]))">@isActive @isLast @moodyService.GetNotes()[index].Title</button>
             </li>
         }
     </ul>
+    <!-- <p>@moodyService.Md.ActiveNote.Text</p> --->
 </div>
 
 @code {
-    private List<MoodyData> notes = new List<MoodyData>();
+    private MoodyData childData = new();
 
-    protected override void OnInitialized()
-    {
-        notes = moodyService.GetNotes();
-    }
+    [Parameter]
+    public EventCallback<MoodyData> OnDataChanged { get; set; }
 
-    protected async void OnAfterRenderAsync(bool firstRender)
+    private async Task HandleDataChanged()
     {
-        //if (firstRender)
-        //{
-        //    
-    //}
+        await OnDataChanged.InvokeAsync(childData);
     }
 
     private void NewNote()
     {
-        moodyService.AddToNotes(new MoodyData() {Id = 1 + notes.Count()});
+        moodyService.AddToNotes(new MoodyData() { Id = 1 + moodyService.GetNotes().Count() });
     }
 
     private void HandleChangeActiveNoteId(MoodyData moodyData)
     {
+        // Update ActiveNote directly
         moodyService.Md.ActiveNote = moodyData;
+
+        // Update ActiveNoteId
         moodyService.Md.ActiveNoteId = moodyData.Id;
-        Console.WriteLine($"Size={moodyService.GetNotes().Count} Sel={moodyData.Id}");
-        Console.WriteLine($"Title = [ {moodyData.Title} ] Text = [ {moodyData.Text} ]");
+        childData = moodyData;
+
+        // Invoke the event handler to notify the parent
+        HandleDataChanged();
     }
 }
