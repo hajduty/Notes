@@ -17,12 +17,6 @@
             </div>
         </div>
         <div class="w-full grow flex">
-            @if (State.Notes.Count == 0)
-            {
-                State.AddToNotes(new MoodyData() { Id = 0, Title = "Untitled", Text = "# hello world" });
-                State.Md.ActiveNote = State.Notes.First();
-            }
-            
             <textarea @bind="@State.Md.ActiveNote.Text" class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
                 @oninput="OnHandleChangeTextarea">@State.Md.ActiveNote.Text</textarea>
             <div
@@ -49,5 +43,14 @@
 
     private void OnHandleChangeTextarea(ChangeEventArgs e) {
         HandleChangeTextarea?.Invoke(e);
+    }
+
+    protected override void OnInitialized()
+    {
+        @if (State.Notes.Count == 0)
+        {
+            State.AddToNotes(new MoodyData() { Id = 0, Title = "Untitled", Text = "# hello world" });
+            State.Md.ActiveNote = State.Notes.First();
+        }
     }
 }
