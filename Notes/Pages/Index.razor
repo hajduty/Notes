@@ -6,13 +6,13 @@
 
 <div class="w-full h-full">
     <div class="flex flex-col w-full h-full">
-        <div class="flex items-center bg-zinc-950 border-b-2 border-zinc-800">
+        <div class="flex items-center bg-zinc-950 border-b border-zinc-700">
             <div class="pl-2">
                 <span>Use Markdown!</span>
             </div>
             <div class="ml-auto">
                 <button type="button"
-                    class="p-2 py-3 border-l border-zinc-800 hover:bg-zinc-800 @(isPreview ? "bg-zinc-900" :"")"
+                    class="p-2 py-3 border-l border-zinc-700 hover:bg-zinc-800 @(isPreview ? "bg-zinc-900" :"")"
                     @onclick="@(() => isPreview = !isPreview)">Preview</button>
             </div>
         </div>
@@ -20,7 +20,7 @@
             <textarea @bind="@State.Md.ActiveNote.Text" class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
                 @oninput="OnHandleChangeTextarea">@State.Md.ActiveNote.Text</textarea>
             <div
-                class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out @(isPreview ? "w-1/2" : "hidden")">
+                class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out border-l border-zinc-700 @(isPreview ? "w-1/2" : "hidden")">
                 <HtmlPreview MD="@State.Md.ActiveNote.Text"></HtmlPreview>
             </div>
         </div>

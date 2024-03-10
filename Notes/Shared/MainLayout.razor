@@ -2,13 +2,12 @@
 
 <PageTitle>Notes</PageTitle>
 
-<div class="page block sm:flex h-full text-white">
-    <div class="w-full sm:h-full sm:w-96 bg-zinc-800">
-        <h1 class="text-3xl font-semibold mb-2 p-4 outline-none">mdNotes</h1>
+<div class="page block lg:flex h-full text-white">
+    <div class="w-full lg:h-full lg:w-96 max-h-96 lg:max-h-[unset] bg-zinc-800 border-r border-zinc-700 overflow-hidden flex">
         <NavMenu HandleChangeActiveNote="@HandleChangeActiveNote" HandleCreateNote="@HandleCreateNote" />
     </div>
 
-    <main class="w-full h-full bg-zinc-900 overflow-hidden">
+    <main class="w-full h-full lg:w-[unset] lg:grow bg-zinc-900 overflow-hidden">
         <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" />
     </main>
 </div>
