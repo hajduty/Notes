@@ -28,6 +28,14 @@
         notes = moodyService.GetNotes();
     }
 
+    protected async void OnAfterRenderAsync(bool firstRender)
+    {
+        //if (firstRender)
+        //{
+        //    
+    //}
+    }
+
     private void NewNote()
     {
         moodyService.AddToNotes(new MoodyData() {Id = 1 + notes.Count()});
@@ -37,6 +45,7 @@
     {
         moodyService.Md.ActiveNote = moodyData;
         moodyService.Md.ActiveNoteId = moodyData.Id;
-        Console.WriteLine(moodyData.Text);
+        Console.WriteLine($"Size={moodyService.GetNotes().Count} Sel={moodyData.Id}");
+        Console.WriteLine($"Title = [ {moodyData.Title} ] Text = [ {moodyData.Text} ]");
     }
 }

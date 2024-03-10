@@ -34,7 +34,9 @@
             string value = e.Value.ToString();
             moodyService.Md.ActiveNote.Text = value;
 
-            moodyService.AddToNotes(moodyService.Md.ActiveNote);
+            moodyService.UpdateNote(moodyService.Md.ActiveNote);
+
+            Console.WriteLine($"{moodyService.Md.ActiveNoteId}");
         }
     }
 
@@ -50,5 +52,7 @@
                 Title = "example"
             }
         };
+
+        //moodyService.Md.ActiveNote = { new MoodyData() { }}
     }
 }

@@ -1,4 +1,5 @@
 using System.Reflection;
+using System.Xml.Linq;
 
 namespace Notes.Data
 {
@@ -10,21 +11,27 @@ namespace Notes.Data
 
         public void AddToNotes(MoodyData note)
         {
-            foreach (var m in Notes)
-            {
-                if (m.Id == note.Id)
-                {
-                    m.Text = note.Text;
-                    Console.WriteLine(m.Text);
-                    return;
-                }
-            }
             Notes.Add(note);
+        }
+
+        public void UpdateNote(MoodyData md)
+        {
+            var element = Notes.FirstOrDefault(e => e.Id == md.Id);
+
+            if (element == null)
+                return;
+
+            element = md;
         }
 
         public List<MoodyData> GetNotes()
         {
             return Notes;
+        }
+
+        public void SetNotes(List<MoodyData> notes)
+        {
+            Notes = notes;
         }
     }
 }
