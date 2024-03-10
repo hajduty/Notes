@@ -33,22 +33,22 @@
         {
             string value = e.Value.ToString();
             moodyService.Md.ActiveNote.Text = value;
-            moodyService.Notes.Add(moodyService.Md.ActiveNote.Title, moodyService.Md);
 
-            moodyService.AddOrUpdate(moodyService.Notes, moodyService.Md.ActiveNote.Title, moodyService.Md);
+            moodyService.AddToNotes(moodyService.Md.ActiveNote);
         }
     }
 
     protected override void OnInitialized()
     {
         moodyService.Md = new Moody
+        {
+            ActiveNoteId = 0,
+            ActiveNote = new MoodyData
             {
-                ActiveNoteId = 0,
-                ActiveNote = new MoodyData
-                {
-                    Id = 0,
-                    Text = "# hello world"
-                }
-            };
+                Id = 0,
+                Text = "# hello world",
+                Title = "example"
+            }
+        };
     }
 }

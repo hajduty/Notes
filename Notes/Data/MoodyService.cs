@@ -1,20 +1,30 @@
+using System.Reflection;
+
 namespace Notes.Data
 {
-    public class MoodyService // TODO: maybe not saving/storing notes here
+    public class MoodyService
     {
         public Moody? Md { get; set; }
-        public Dictionary<string, Moody> Notes { get; set; }
-        public void AddOrUpdate<TKey, TValue>(Dictionary<TKey, TValue> dictionary, TKey key, TValue value)
+
+        private List<MoodyData> Notes { get; set; } = new List<MoodyData>() { new MoodyData() { Text = "Example", Id = 0, Title = "Titelx" } };
+
+        public void AddToNotes(MoodyData note)
         {
-            if (dictionary.ContainsKey(key))
+            foreach (var m in Notes)
             {
-                dictionary[key] = value;
+                if (m.Id == note.Id)
+                {
+                    m.Text = note.Text;
+                    Console.WriteLine(m.Text);
+                    return;
+                }
             }
-            else
-            {
-                dictionary.Add(key, value);
-            }
+            Notes.Add(note);
         }
 
+        public List<MoodyData> GetNotes()
+        {
+            return Notes;
+        }
     }
 }

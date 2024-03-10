@@ -1,48 +1,54 @@
 ﻿@using Notes.Data
 @inject MoodyService moodyService
 
-@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
-@inject ProtectedLocalStorage ProtectedLocalStore
-
 <div class="container-fluid">
-  <ul>
-    @for (int index = 0; index < list.Count(); index++)
-    {
-      int i = index;
-      string str = list[i];
-      bool isLast = i == list.Count() - 1;
-      bool isActive = i == moodyService.Md?.ActiveNoteId;
+    <button @onclick=@NewNote>addNew</button>
+    <ul>
+        @for (int i = 0; i < notes.Count(); i++)
+        {
+            int index = i;
+            int id = notes[i].Id;
 
-      <li class="@(isLast ? "" : "mb-2")">
-        <button class="p-4" @onclick="@(() => HandleChangeActiveNoteId(i))">@isActive @isLast @list[i]</button>
-      </li>
-    }
-  </ul>
+            string str = notes[i].Title;
+            bool isLast = index == notes.Count() - 1;
+            bool isActive = id == moodyService.Md?.ActiveNoteId;
+
+            <li class="@(isLast ? "" : "mb-2")">
+                <button class="p-4" @onclick="@(() => HandleChangeActiveNoteId(notes[index]))">@isActive @isLast @notes[index].Title</button>
+            </li>
+        }
+    </ul>
 </div>
 
 @code {
-    public List<string> list = new List<string> { "my first note", "my second note" };
+    private List<MoodyData> notes = new List<MoodyData>();
 
-    private void HandleChangeActiveNoteId (int index) {
-        moodyService.Md.ActiveNoteId = index;
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    protected override void OnInitialized()
     {
-        if (firstRender)
-        {
-            var result = await ProtectedLocalStore.GetAsync<Dictionary<string, Moody>>("MdNotes");
-
-            if (result.Success && result.Value != null) // Check for null value
-            {
-                moodyService.Notes = result.Value;
-                StateHasChanged(); // Ensure UI updates after data retrieval
-            }
-        }
-
-        if (moodyService.Notes != null)
-        {
-            await ProtectedLocalStore.SetAsync("MdNotes", moodyService.Notes);
-        }
+        notes = moodyService.GetNotes();
     }
+
+    private void NewNote()
+    {
+        moodyService.AddToNotes(new MoodyData() {Id = 1 + notes.Count()});
+    }
+
+    private void HandleChangeActiveNoteId(MoodyData moodyData)
+    {
+        moodyService.Md.ActiveNote = moodyData;
+        moodyService.Md.ActiveNoteId = moodyData.Id;
+        Console.WriteLine(moodyData.Text);
+    }
+
+    //@for (int index = 0; index<list.Count(); index++)
+    //{
+    //  int i = index;
+    //string str = list[i];
+    //bool isLast = i == list.Count() - 1;
+    //bool isActive = i == moodyService.Md?.ActiveNoteId;
+    //
+    //<li class="@(isLast ? "" : "mb-2")">
+    //    <button class="p-4" @onclick="@(() => HandleChangeActiveNoteId(i))">@isActive @isLast @list[i]</button>
+    //</li>
+    //}
 }

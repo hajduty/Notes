@@ -8,8 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddSingleton<WeatherForecastService>();
-builder.Services.AddScoped<MoodyService>();
 builder.Services.AddSingleton<MdService>();
+builder.Services.AddScoped<MoodyService>();
 
 var app = builder.Build();
 
