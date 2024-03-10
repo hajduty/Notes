@@ -9,12 +9,12 @@
     </div>
 
     <main class="w-full h-full bg-zinc-900 overflow-hidden">
-        <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" HandleChangeTitlearea="@HandleTitlearea"/>
+        <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" HandleChangeTitle="@HandleChangeTitle" />
     </main>
 </div>
 
 @code {
-    private void HandleTitlearea(ChangeEventArgs e)
+    private void HandleChangeTitle(ChangeEventArgs e)
     {
         if (e is not null && e.Value is not null)
         {
