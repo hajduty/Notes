@@ -10,10 +10,10 @@
                 bool isLast = index == State.Notes.Count() - 1;
                 bool isActive = Note.Id == State.Md.ActiveNoteId;
 
-                    <li class="@(isLast ? "" : "border-b border-zinc-700")">
-                        <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")"
-                            @onclick="@(() => OnHandleChangeActiveNote(Note))">@Note.Title</button>
-                    </li>
+                <li class="@(isLast ? "" : "border-b border-zinc-700")">
+                    <button class="p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")"
+                        @onclick="@(() => OnHandleChangeActiveNote(Note))">@Note.Title</button>
+                </li>
             }
         </ul>
     </div>
