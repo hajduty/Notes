@@ -1,6 +1,9 @@
 ﻿@using Notes.Data
 @inject MoodyService moodyService
 
+@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
+@inject ProtectedLocalStorage ProtectedLocalStore
+
 @page "/"
 <PageTitle>mdNotes</PageTitle>
 
@@ -24,12 +27,15 @@
 @code {
     private bool isPreview = false;
 
-    private void HandleChangeTextarea(ChangeEventArgs e)
+    private async void HandleChangeTextarea(ChangeEventArgs e)
     {
         if (e.Value is not null)
         {
             string value = e.Value.ToString();
             moodyService.Md.ActiveNote.Text = value;
+            moodyService.Notes.Add(moodyService.Md.ActiveNote.Title, moodyService.Md);
+
+            moodyService.AddOrUpdate(moodyService.Notes, moodyService.Md.ActiveNote.Title, moodyService.Md);
         }
     }
 
