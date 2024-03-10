@@ -44,4 +44,13 @@
     private void OnHandleChangeTextarea(ChangeEventArgs e) {
         HandleChangeTextarea?.Invoke(e);
     }
+
+    protected override void OnInitialized()
+    {
+        @if (State.Notes.Count == 0)
+        {
+            State.AddToNotes(new MoodyData() { Id = 0, Title = "Untitled", Text = "# hello world" });
+            State.Md.ActiveNote = State.Notes.First();
+        }
+    }
 }

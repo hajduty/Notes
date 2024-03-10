@@ -2,8 +2,6 @@ namespace Notes.Data
 {
     public class Moody
     {
-        public int ActiveNoteId { get; set; } = 0;
-
         public MoodyData ActiveNote { get; set; } = new();
     }
 
