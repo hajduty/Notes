@@ -1,5 +1,4 @@
 ﻿using Markdig;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Notes.Data
 {
