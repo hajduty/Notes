@@ -9,11 +9,21 @@
     </div>
 
     <main class="w-full h-full bg-zinc-900 overflow-hidden">
-        <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" />
+        <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" HandleChangeTitlearea="@HandleTitlearea"/>
     </main>
 </div>
 
 @code {
+    private void HandleTitlearea(ChangeEventArgs e)
+    {
+        if (e is not null && e.Value is not null)
+        {
+            string value = e.Value.ToString() ?? "";
+            State.Md.ActiveNote.Title = value;
+            StateHasChanged();
+        }
+    }
+
     private void HandleChangeTextarea(ChangeEventArgs e)
     {
         if (e is not null && e.Value is not null)
