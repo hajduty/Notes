@@ -1,5 +1,5 @@
 ﻿@using Notes.Data
-@inject MoodyService moodyService
+@inject MoodyService MoodyService
 
 <div class="container-fluid">
     <button @onclick=@NewNote>addNew</button>
@@ -8,6 +8,7 @@
         {
             int index = i;
             int id = notes[i].Id;
+      bool isActive = i == MoodyService.Md?.ActiveNoteId;
 
             string str = notes[i].Title;
             bool isLast = index == notes.Count() - 1;
@@ -39,16 +40,4 @@
         moodyService.Md.ActiveNoteId = moodyData.Id;
         Console.WriteLine(moodyData.Text);
     }
-
-    //@for (int index = 0; index<list.Count(); index++)
-    //{
-    //  int i = index;
-    //string str = list[i];
-    //bool isLast = i == list.Count() - 1;
-    //bool isActive = i == moodyService.Md?.ActiveNoteId;
-    //
-    //<li class="@(isLast ? "" : "mb-2")">
-    //    <button class="p-4" @onclick="@(() => HandleChangeActiveNoteId(i))">@isActive @isLast @list[i]</button>
-    //</li>
-    //}
 }
