@@ -17,11 +17,11 @@
             </div>
         </div>
         <div class="w-full grow flex">
-            <textarea class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
-                @oninput="OnHandleChangeTextarea">@MoodyService.Md.ActiveNote.Text</textarea>
+            <textarea @bind="@State.Md.ActiveNote.Text" class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
+                @oninput="OnHandleChangeTextarea">@State.Md.ActiveNote.Text</textarea>
             <div
                 class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out @(isPreview ? "w-1/2" : "hidden")">
-                <HtmlPreview MD="@MoodyService.Md.ActiveNote.Text"></HtmlPreview>
+                <HtmlPreview MD="@State.Md.ActiveNote.Text"></HtmlPreview>
             </div>
         </div>
     </div>

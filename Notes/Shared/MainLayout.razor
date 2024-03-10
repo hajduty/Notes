@@ -14,9 +14,6 @@
 </div>
 
 @code {
-    [Inject]
-    protected MoodyService State { get; set; }
-
     private void HandleChangeTextarea(ChangeEventArgs e)
     {
         if (e is not null && e.Value is not null)
@@ -25,8 +22,8 @@
             State.Md.ActiveNote.Text = value;
 
             State.UpdateNote(State.Md.ActiveNote);
+            StateHasChanged();
         }
-        StateHasChanged();
     }
 
     private void HandleChangeActiveNote(MoodyData moodyData)
