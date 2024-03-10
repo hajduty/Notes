@@ -26,16 +26,19 @@
 
             State.UpdateNote(State.Md.ActiveNote);
         }
+        StateHasChanged();
     }
 
     private void HandleChangeActiveNote(MoodyData moodyData)
     {
         State.Md.ActiveNoteId = moodyData.Id;
         State.Md.ActiveNote = moodyData;
+        StateHasChanged();
     }
 
     private void HandleCreateNote()
     {
         State.AddToNotes(new MoodyData() { Id = State.Notes.Count() });
+        StateHasChanged();
     }
 }
