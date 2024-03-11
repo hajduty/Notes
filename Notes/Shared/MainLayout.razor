@@ -98,7 +98,6 @@
         var storageResult = await Storage.GetAsync<List<MoodyData>>("MdNotes");
         if (storageResult.Success && storageResult.Value is not null && storageResult.Value.Count > 0)
         {
-            Console.WriteLine(storageResult.Value.Count());
             State.Notes = storageResult.Value;
             State.Md.ActiveNote = State.Notes.First();
             StateHasChanged();
