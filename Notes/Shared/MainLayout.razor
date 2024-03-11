@@ -56,8 +56,6 @@
     {
         int IndexOfNote = State.Notes.FindIndex(e => e.Id == State.Md.ActiveNote.Id);
 
-        Console.WriteLine(IndexOfNote);
-
         if (IndexOfNote > -1)
         {
             State.DeleteNote(State.Md.ActiveNote);
