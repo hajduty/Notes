@@ -16,9 +16,23 @@ namespace Notes.Data
             var element = Notes.FirstOrDefault(e => e.Id == md.Id);
 
             if (element == null)
+            {
                 return;
+            }
 
             element = md;
+        }
+
+        public void DeleteNote(MoodyData md)
+        {
+            var element = Notes.FirstOrDefault(e => e.Id == md.Id);
+
+            if (element == null)
+            {
+                return;
+            }
+
+            Notes.Remove(element);
         }
     }
 }

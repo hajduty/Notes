@@ -1,14 +1,13 @@
-﻿@using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
-@inject ProtectedLocalStorage ProtectedLocalStore
-
-@page "/"
+﻿@page "/"
 <PageTitle>mdNotes</PageTitle>
 
 <div class="w-full h-full">
     <div class="flex flex-col w-full h-full">
         <div class="flex items-center bg-zinc-950 border-b border-zinc-700">
-            <div class="pl-2">
-                <input class="bg-zinc-950" type="text" @bind="@State.Md.ActiveNote.Title" @oninput="OnHandleChangeTitle" />
+            <div class="h-full grow flex">
+                <button class="p-2 px-4 bg-red-950 hover:bg-red-700" @onclick="@OnHandleDeleteNote">Delete</button>
+                <input class="pl-4 px-2 bg-transparent h-full w-full outline-none focus:border focus:border-zinc-500" type="text" @bind="@State.Md.ActiveNote.Title"
+                    @oninput="@OnHandleChangeTitle" />
             </div>
             <div class="ml-auto">
                 <button type="button"
@@ -17,8 +16,9 @@
             </div>
         </div>
         <div class="w-full grow flex">
-            <textarea @bind="@State.Md.ActiveNote.Text" class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
-                @oninput="OnHandleChangeTextarea">@State.Md.ActiveNote.Text</textarea>
+            <textarea @bind="@State.Md.ActiveNote.Text"
+                class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
+                @oninput="@OnHandleChangeTextarea">@State.Md.ActiveNote.Text</textarea>
             <div
                 class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out border-l border-zinc-700 @(isPreview ? "w-1/2" : "hidden")">
                 <HtmlPreview MD="@State.Md.ActiveNote.Text"></HtmlPreview>
@@ -36,20 +36,29 @@
     [Parameter]
     public Action<ChangeEventArgs>? HandleChangeTitle { get; set; }
 
+    [Parameter]
+    public Action? HandleDeleteNote { get; set; }
+
     private void OnHandleChangeTitle(ChangeEventArgs e)
     {
         HandleChangeTitle?.Invoke(e);
     }
 
-    private void OnHandleChangeTextarea(ChangeEventArgs e) {
+    private void OnHandleChangeTextarea(ChangeEventArgs e)
+    {
         HandleChangeTextarea?.Invoke(e);
+    }
+
+    private void OnHandleDeleteNote()
+    {
+        HandleDeleteNote?.Invoke();
     }
 
     protected override void OnInitialized()
     {
-        @if (State.Notes.Count == 0)
+        if (State.Notes.Count == 0)
         {
-            State.AddToNotes(new MoodyData() { Id = 0, Title = "Untitled", Text = "# hello world" });
+            State.AddToNotes(new MoodyData());
             State.Md.ActiveNote = State.Notes.First();
         }
     }

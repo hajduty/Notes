@@ -1,6 +1,6 @@
 ﻿<div class="flex flex-col grow">
     <button @onclick="@OnHandleCreateNote" class="p-3 flex bg-zinc-900 hover:bg-zinc-700 w-full font-bold border-b border-zinc-700">Create New</button>
-    <div class="grow overflow-y-scroll">
+    <div class="grow overflow-y-auto">
         <ul>
             @for (int i = 0; i < State.Notes.Count(); i++)
             {

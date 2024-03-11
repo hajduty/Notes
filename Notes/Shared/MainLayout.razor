@@ -8,7 +8,7 @@
     </div>
 
     <main class="w-full h-full lg:w-[unset] lg:grow bg-zinc-900 overflow-hidden">
-        <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" HandleChangeTitle="@HandleChangeTitle" />
+        <Notes.Pages.Index HandleChangeTextarea="@HandleChangeTextarea" HandleChangeTitle="@HandleChangeTitle" HandleDeleteNote="@HandleDeleteNote" />
     </main>
 </div>
 
@@ -30,6 +30,11 @@
             string value = e.Value.ToString() ?? "";
             State.Md.ActiveNote.Text = value;
 
+            if (State.Notes.Count == 0) {
+                State.Md.ActiveNote.Id = Guid.NewGuid();
+                State.AddToNotes(State.Md.ActiveNote);
+            }
+
             State.UpdateNote(State.Md.ActiveNote);
             StateHasChanged();
         }
@@ -43,7 +48,41 @@
 
     private void HandleCreateNote()
     {
-        State.AddToNotes(new MoodyData() { Id = State.Notes.Count() });
+        State.AddToNotes(new MoodyData());
         StateHasChanged();
+    }
+
+    private void HandleDeleteNote()
+    {
+        int IndexOfNote = State.Notes.FindIndex(e => e.Id == State.Md.ActiveNote.Id);
+
+        Console.WriteLine(IndexOfNote);
+
+        if (IndexOfNote > -1)
+        {
+            State.DeleteNote(State.Md.ActiveNote);
+
+            if (IndexOfNote == 0)
+            {
+                if (State.Notes.Count == 0)
+                { 
+                    State.Md.ActiveNote = new MoodyData();
+                }
+                else
+                {
+                     State.Md.ActiveNote = State.Notes.First();
+                }
+            }
+            else if (IndexOfNote > State.Notes.Count - 1)
+            {
+                State.Md.ActiveNote = State.Notes[IndexOfNote - 1];
+            }
+            else if (IndexOfNote > 0)
+            {
+                State.Md.ActiveNote = State.Notes[IndexOfNote];
+            }
+
+            StateHasChanged();
+        }
     }
 }

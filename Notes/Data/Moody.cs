@@ -7,7 +7,7 @@ namespace Notes.Data
 
     public class MoodyData
     {
-        public int Id { get; set; } = 0;
+        public Guid Id { get; set; } = Guid.NewGuid();
         public string Text { get; set; } = "# hello world";
         public string Title { get; set; } = "Untitled";
     }
