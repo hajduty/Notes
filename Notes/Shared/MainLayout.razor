@@ -13,6 +13,13 @@
 </div>
 
 @code {
+    private async Task SaveMoodyDataAsync()
+    {
+        Console.WriteLine("Saving");
+        await Storage.SetAsync("MdNotes", State.Notes);
+        StateHasChanged();
+    }
+
     private void HandleChangeTitle(ChangeEventArgs e)
     {
         if (e is not null && e.Value is not null)
@@ -36,6 +43,7 @@
             }
 
             State.UpdateNote(State.Md.ActiveNote);
+            SaveMoodyDataAsync();
             StateHasChanged();
         }
     }

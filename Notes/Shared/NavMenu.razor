@@ -35,4 +35,22 @@
     {
         HandleCreateNote?.Invoke();
     }
+
+    private async Task LoadMoodyDataAsync()
+    {
+        var storageResult = await Storage.GetAsync<List<MoodyData>>("MdNotes");
+        if (storageResult.Success)
+        {
+            State.Notes.AddRange(storageResult.Value);
+            StateHasChanged();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadMoodyDataAsync();
+        }
+    }
 }
