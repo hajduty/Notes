@@ -1,4 +1,4 @@
-﻿@inherits LayoutComponentBase
+@inherits LayoutComponentBase
 
 <PageTitle>Notes</PageTitle>
 
@@ -15,7 +15,6 @@
 @code {
     private async Task SaveMoodyDataAsync()
     {
-        Console.WriteLine("Saving");
         await Storage.SetAsync("MdNotes", State.Notes);
         StateHasChanged();
     }
