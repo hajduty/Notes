@@ -13,12 +13,19 @@
 </div>
 
 @code {
+    private async Task SaveMoodyDataAsync()
+    {
+        await Storage.SetAsync("MdNotes", State.Notes);
+        StateHasChanged();
+    }
+
     private void HandleChangeTitle(ChangeEventArgs e)
     {
         if (e is not null && e.Value is not null)
         {
             string value = e.Value.ToString() ?? "";
             State.Md.ActiveNote.Title = value;
+            SaveMoodyDataAsync();
             StateHasChanged();
         }
     }
@@ -36,6 +43,7 @@
             }
 
             State.UpdateNote(State.Md.ActiveNote);
+            SaveMoodyDataAsync();
             StateHasChanged();
         }
     }
@@ -49,6 +57,7 @@
     private void HandleCreateNote()
     {
         State.AddToNotes(new MoodyData());
+        SaveMoodyDataAsync();
         StateHasChanged();
     }
 
@@ -79,8 +88,27 @@
             {
                 State.Md.ActiveNote = State.Notes[IndexOfNote];
             }
-
+            SaveMoodyDataAsync();
             StateHasChanged();
+        }
+    }
+
+    private async Task LoadMoodyDataAsync()
+    {
+        var storageResult = await Storage.GetAsync<List<MoodyData>>("MdNotes");
+        if (storageResult.Success && storageResult.Value is not null)
+        {
+            State.Notes = storageResult.Value;
+            State.Md.ActiveNote = State.Notes.First();
+            StateHasChanged();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadMoodyDataAsync();
         }
     }
 }

@@ -8,8 +8,8 @@
                 <button class="p-4 bg-red-950 hover:bg-red-700" @onclick="@OnHandleDeleteNote">
                     <Trash />
                 </button>
-                <input class="pl-4 px-2 bg-transparent h-full w-full outline-none focus:border focus:border-zinc-500" type="text" @bind="@State.Md.ActiveNote.Title"
-                    @oninput="@OnHandleChangeTitle" />
+                <input class="pl-4 px-2 bg-transparent h-full w-full outline-none focus:border focus:border-zinc-500"
+                    type="text" @bind="@State.Md.ActiveNote.Title" @oninput="@OnHandleChangeTitle" />
             </div>
             <div class="ml-auto">
                 <button type="button"
@@ -56,14 +56,5 @@
     private void OnHandleDeleteNote()
     {
         HandleDeleteNote?.Invoke();
-    }
-
-    protected override void OnInitialized()
-    {
-        if (State.Notes.Count == 0)
-        {
-            State.AddToNotes(new MoodyData());
-            State.Md.ActiveNote = State.Notes.First();
-        }
     }
 }
