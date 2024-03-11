@@ -1,4 +1,4 @@
-@inherits LayoutComponentBase
+﻿@inherits LayoutComponentBase
 
 <PageTitle>Notes</PageTitle>
 
@@ -90,6 +90,25 @@
             }
             SaveMoodyDataAsync();
             StateHasChanged();
+        }
+    }
+
+    private async Task LoadMoodyDataAsync()
+    {
+        var storageResult = await Storage.GetAsync<List<MoodyData>>("MdNotes");
+        if (storageResult.Success && storageResult.Value is not null)
+        {
+            State.Notes = storageResult.Value;
+            State.Md.ActiveNote = State.Notes.First();
+            StateHasChanged();
+        }
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await LoadMoodyDataAsync();
         }
     }
 }

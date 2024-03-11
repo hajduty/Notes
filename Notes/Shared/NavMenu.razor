@@ -1,5 +1,6 @@
 ﻿<div class="flex flex-col grow">
-    <button @onclick="@OnHandleCreateNote" class="p-3 flex bg-zinc-900 hover:bg-zinc-700 w-full font-bold border-b border-zinc-700">Create New</button>
+    <button @onclick="@OnHandleCreateNote"
+        class="p-3 flex bg-zinc-900 hover:bg-zinc-700 w-full font-bold border-b border-zinc-700">Create New</button>
     <div class="grow overflow-y-auto">
         <ul>
             @for (int i = 0; i < State.Notes.Count(); i++)
@@ -34,23 +35,5 @@
     private void OnHandleCreateNote()
     {
         HandleCreateNote?.Invoke();
-    }
-
-    private async Task LoadMoodyDataAsync()
-    {
-        var storageResult = await Storage.GetAsync<List<MoodyData>>("MdNotes");
-        if (storageResult.Success)
-        {
-            State.Notes.AddRange(storageResult.Value);
-            StateHasChanged();
-        }
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await LoadMoodyDataAsync();
-        }
     }
 }
