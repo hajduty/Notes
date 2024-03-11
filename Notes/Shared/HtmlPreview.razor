@@ -1,6 +1,6 @@
 ﻿@inject MdService MdService
 
-<div class="prose prose-invert">
+<div class="prose prose-invert break-words hyphens-auto">
     @((MarkupString)MdService.ConvertToHtml(MD ?? ""))
 </div>
 

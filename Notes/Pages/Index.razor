@@ -15,12 +15,12 @@
                     @onclick="@(() => isPreview = !isPreview)">Preview</button>
             </div>
         </div>
-        <div class="w-full grow flex">
+        <div class="w-full grow flex overflow-hidden">
             <textarea @bind="@State.Md.ActiveNote.Text"
-                class="p-4 outline-none resize-none bg-transparent @(isPreview ? "w-1/2" : "grow")"
+                class="p-4 outline-none resize-none bg-transparent h-full @(isPreview ? "w-1/2" : "grow")"
                 @oninput="@OnHandleChangeTextarea">@State.Md.ActiveNote.Text</textarea>
             <div
-                class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out border-l border-zinc-700 @(isPreview ? "w-1/2" : "hidden")">
+                class="p-4 bg-zinc-950 animate-fade-left animate-once animate-ease-in-out border-l border-zinc-700 h-full overflow-y-auto @(isPreview ? "w-1/2" : "hidden")">
                 <HtmlPreview MD="@State.Md.ActiveNote.Text"></HtmlPreview>
             </div>
         </div>
