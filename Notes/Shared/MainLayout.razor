@@ -56,7 +56,11 @@
 
     private void HandleCreateNote()
     {
-        State.AddToNotes(new MoodyData());
+        MoodyData NewNote = new MoodyData{
+            Title = "Untitled " + State.Notes.Count.ToString()
+        };
+        State.AddToNotes(NewNote);
+        State.Md.ActiveNote = NewNote;
         SaveMoodyDataAsync();
         StateHasChanged();
     }
