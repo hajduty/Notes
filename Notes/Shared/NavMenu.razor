@@ -1,10 +1,10 @@
-﻿<div class="flex flex-col grow">
+﻿<div class="flex flex-col grow w-full">
     <button class="p-4 flex gap-4 bg-zinc-900 hover:bg-zinc-700 w-full font-bold border-b border-zinc-700"
         @onclick="@OnHandleCreateNote">
         <FileAdd />
         <span>Add new</span>
     </button>
-    <div class="grow overflow-y-auto">
+    <div class="grow overflow-y-auto overflow-x-hidden">
         <ul>
             @for (int i = 0; i < State.Notes.Count(); i++)
             {
@@ -14,9 +14,18 @@
                 bool isLast = index == State.Notes.Count() - 1;
                 bool isActive = Note.Id == State.Md.ActiveNote.Id;
 
-                <li class="@(isLast ? "" : "border-b border-zinc-700")">
-                    <button class="text-sm p-4 flex w-full hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")"
-                        @onclick="@(() => OnHandleChangeActiveNote(Note))">@Note.Title</button>
+                <li class="flex overflow-hidden @(isLast ? "" : "border-b border-zinc-700")">
+                    <button class="p-4 w-full text-left text-sm text-ellipsis overflow-hidden hover:bg-zinc-700 @(isActive ? "bg-zinc-900" : "")"
+                        @onclick="@(() => OnHandleChangeActiveNote(Note))">
+                        @if (Note.Title.Length > 0)
+                        {
+                            @Note.Title
+                        }
+                        else
+                        {
+                            <i class="italic">No title set</i>
+                        }
+                    </button>
                 </li>
             }
         </ul>
